@@ -1,0 +1,11 @@
+.vagrant
+
+# editors
+*/.*.swp
+*/.*.swo
+**/*~
+**/#*#
+**/.#*
+
+/salt/keys
+misc/
