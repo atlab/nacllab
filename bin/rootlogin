@@ -1,0 +1,2 @@
+#! /bin/sh
+exec vagrant ssh -c 'exec sudo -i su -' $*
