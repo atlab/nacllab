@@ -7,5 +7,7 @@
 **/#*#
 **/.#*
 
-/salt/keys
 misc/
+salt/keys/*.pem
+salt/keys/*.pub
+
