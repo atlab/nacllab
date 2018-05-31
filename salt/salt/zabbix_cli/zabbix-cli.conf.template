@@ -1,0 +1,21 @@
+
+[zabbix_api]
+; top of zabbix install
+zabbix_api_url={{ zabbix_api_url }}
+
+[zabbix_config]
+system_id={{ zabbix_hostname }}
+default_hostgroup=All-hosts
+default_admin_usergroup=Zabbix-root
+default_create_user_usergroup=All-users
+default_notification_users_usergroup=All-notification-users
+; default_directory_exports=$HOME/zabbix_exports
+include_timestamp_export_filename=ON
+use_colors=ON
+use_auth_token_file=ON
+
+[logging]
+logging=OFF
+log_level=INFO
+;log_file=/var/log/zabbix-cli/zabbix-cli.log
+
