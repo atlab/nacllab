@@ -6,3 +6,4 @@ common packages:
       - figlet
       - nvi
       - apt-file
+      - make
