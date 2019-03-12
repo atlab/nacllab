@@ -1,0 +1,13 @@
+master: 172.28.128.61
+id: mysql1
+
+# testing
+# todo: ok?
+# todo: push minion config
+mysql.host: 'localhost'
+mysql.port: 3306
+mysql.user: 'root'
+mysql.pass: ''
+mysql.db: 'mysql'
+mysql.unix_socket: '/var/run/mysqld/mysqld.sock'
+mysql.charset: 'utf8'
