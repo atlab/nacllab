@@ -17,6 +17,6 @@ add_zabbix_apt_key:
 add_zabbix_repo:
   pkgrepo.managed:
     - humanname: zabbix
-    - name: deb http://repo.zabbix.com/zabbix/3.4/ubuntu xenial main
+    - name: deb http://repo.zabbix.com/zabbix/3.4/ubuntu {{ grains['lsb_distrib_codename'] }} main
     - file: /etc/apt/sources.list.d/zabbix.list
 
