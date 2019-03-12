@@ -12,11 +12,11 @@
 
 Vagrant.configure("2") do |config|
 
-  config.vm.define "nacl" do |nacl|
+  config.vm.define "nacl1" do |nacl1|
     # nacl.vm.box = "generic/ubuntu1804" # does funky dns stuff nobueno
-    nacl.vm.box = "ubuntu/bionic64"
-    nacl.vm.hostname = "nacl"
-    nacl.vm.network "private_network", ip: "172.28.128.61"
+    nacl1.vm.box = "ubuntu/bionic64"
+    nacl1.vm.hostname = "nacl"
+    nacl1.vm.network "private_network", ip: "172.28.128.61"
 
     # # there:
     # $ find saltstack -type d
@@ -46,11 +46,10 @@ Vagrant.configure("2") do |config|
     # cp -p ${host}.pem ${host}.pub /vagrant
     # then update configs here (seed_master, per sub node)
 
+    nacl1.vm.synced_folder "salt/salt/", "/srv/salt"
+    nacl1.vm.synced_folder "salt/pillar/", "/srv/pillar"
 
-    nacl.vm.synced_folder "salt/salt/", "/srv/salt"
-    nacl.vm.synced_folder "salt/pillar/", "/srv/pillar"
-
-    nacl.vm.provision :salt do |salt|
+    nacl1.vm.provision :salt do |salt|
 
       salt.install_type = "stable"
 
@@ -61,10 +60,11 @@ Vagrant.configure("2") do |config|
       # salt.no_minion = true
 
       salt.master_config = "salt/etc/master"
-      salt.master_key = "salt/keys/nacl.pem"
-      salt.master_pub = "salt/keys/nacl.pub"
+      salt.master_key = "salt/keys/nacl1.pem"
+      salt.master_pub = "salt/keys/nacl1.pub"
       salt.seed_master = {
-                            "nacl" => "salt/keys/nacl.pub",
+                            "nacl1" => "salt/keys/nacl1.pub",
+                            "nacl2" => "salt/keys/nacl2.pub",
                             "mon" => "salt/keys/mon.pub",
                             "mysql1" => "salt/keys/mysql1.pub",
                             "mysql2" => "salt/keys/mysql2.pub",
@@ -72,9 +72,76 @@ Vagrant.configure("2") do |config|
                          }
 
       salt.minion_id = "nacl"
-      salt.minion_config = "salt/etc/nacl"
-      salt.minion_key = "salt/keys/nacl.pem"
-      salt.minion_pub = "salt/keys/nacl.pub"
+      salt.minion_config = "salt/etc/nacl1"
+      salt.minion_key = "salt/keys/nacl1.pem"
+      salt.minion_pub = "salt/keys/nacl1.pub"
+
+    end
+  end
+
+  config.vm.define "nacl2" do |nacl2|
+    # nacl.vm.box = "generic/ubuntu1804" # does funky dns stuff nobueno
+    nacl2.vm.box = "ubuntu/bionic64"
+    nacl2.vm.hostname = "nacl"
+    nacl2.vm.network "private_network", ip: "172.28.128.62"
+
+    # # there:
+    # $ find saltstack -type d
+    # saltstack
+    # saltstack/etc
+    # saltstack/keys
+    # saltstack/pillar
+    # saltstack/salt
+    # saltstack/salt/common
+    # saltstack/salt/misc
+
+    # # here:
+    # $ find salt -type d
+    # salt
+    # salt/roots
+    
+    # there (master):
+    # master_config.vm.synced_folder "saltstack/salt/", "/srv/salt"
+    # master_config.vm.synced_folder "saltstack/pillar/", "/srv/pillar"
+
+    # mkdir -p salt/{salt,pillar}
+
+    # CONFIRM:
+    # for new nodes in net, on master:
+    # host='foo'
+    # salt-key --gen-keys=${host}
+    # cp -p ${host}.pem ${host}.pub /vagrant
+    # then update configs here (seed_master, per sub node)
+
+    nacl2.vm.synced_folder "salt/salt/", "/srv/salt"
+    nacl2.vm.synced_folder "salt/pillar/", "/srv/pillar"
+
+    nacl2.vm.provision :salt do |salt|
+
+      salt.install_type = "stable"
+
+      salt.verbose = true
+      salt.colorize = true
+      salt.bootstrap_options = "-P -c /tmp"
+      salt.install_master = true
+      # salt.no_minion = true
+
+      salt.master_config = "salt/etc/master"
+      salt.master_key = "salt/keys/nacl2.pem"
+      salt.master_pub = "salt/keys/nacl2.pub"
+      salt.seed_master = {
+                            "nacl1" => "salt/keys/nacl1.pub",
+                            "nacl2" => "salt/keys/nacl2.pub",
+                            "mon" => "salt/keys/mon.pub",
+                            "mysql1" => "salt/keys/mysql1.pub",
+                            "mysql2" => "salt/keys/mysql2.pub",
+                            "mysql3" => "salt/keys/mysql3.pub",
+                         }
+
+      salt.minion_id = "nacl2"
+      salt.minion_config = "salt/etc/nacl2"
+      salt.minion_key = "salt/keys/nacl2.pem"
+      salt.minion_pub = "salt/keys/nacl2.pub"
 
     end
   end
@@ -82,7 +149,7 @@ Vagrant.configure("2") do |config|
   config.vm.define "mon" do |mon|
     mon.vm.box = "ubuntu/xenial64"
     mon.vm.hostname = "mon"
-    mon.vm.network "private_network", ip: "172.28.128.62"
+    mon.vm.network "private_network", ip: "172.28.128.63"
 
     mon.vm.provision :salt do |salt|
 
