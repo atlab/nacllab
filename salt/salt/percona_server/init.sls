@@ -5,6 +5,7 @@
 # todo: apparmor?
 # todo: set password, create my.cnf
 # todo: parameterize mysql data directory, make part of server template 
+# todo: secure_file_priv
 # # merge other todos
 
 add_percona_gpg_key:
@@ -20,11 +21,12 @@ add_percona_apt_key:
   require:
     - cmd: 'add_percona_gpg_key'
 
-
+# todo: dispatch repo based on installed system
+# lsb_distrib_codename
 install_percona_server:
   pkgrepo.managed:
     - humanname: percona-release
-    - name: deb http://repo.percona.com/apt xenial main
+    - name: deb http://repo.percona.com/apt {{ grains['lsb_distrib_codename'] }} main
     - file: /etc/apt/sources.list.d/percona-release.list
   pkg.installed:
     - pkgs:
@@ -43,7 +45,8 @@ install_percona_server:
    - template: jinja
    - defaults:
      server_id: 11
-
+     innodb_log_file_size: 100M
+     innodb_bufer_pool_size: 100M
 
 /data/mysql:
   file.directory:

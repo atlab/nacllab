@@ -95,8 +95,8 @@ max_binlog_size   = 100M
 # Read the manual for more InnoDB related options. There are many!
 innodb_file_format=Barracuda
 innodb_large_prefix=on
-innodb_log_file_size = 2G
-innodb_buffer_pool_size         = 4G
+innodb_log_file_size = {{ innodb_log_file_size }}
+innodb_buffer_pool_size         = {{ innodb_bufer_pool_size }}
 innodb_log_buffer_size          = 8M
 innodb_file_per_table           = 1
 innodb_stats_on_metadata        = 0
