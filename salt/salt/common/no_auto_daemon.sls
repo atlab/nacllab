@@ -3,6 +3,7 @@
 # todo:
 #  - first log args & env
 #  - if args/env, then use to build 'smarter' script.
+#  - see notes in actual script
 
 /usr/sbin/policy-rc.d:
   file.managed:
