@@ -13,7 +13,8 @@
 Vagrant.configure("2") do |config|
 
   config.vm.define "nacl" do |nacl|
-    nacl.vm.box = "ubuntu/xenial64"
+    # nacl.vm.box = "generic/ubuntu1804" # does funky dns stuff nobueno
+    nacl.vm.box = "ubuntu/bionic64"
     nacl.vm.hostname = "nacl"
     nacl.vm.network "private_network", ip: "172.28.128.61"
 
@@ -112,7 +113,7 @@ Vagrant.configure("2") do |config|
 
   # dblab merge
   config.vm.define "mysql1" do |mysql1|
-    mysql1.vm.box = "ubuntu/xenial64"
+    mysql1.vm.box = "ubuntu/bionic64"
     mysql1.vm.hostname = "mysql1"
     mysql1.vm.network "private_network", ip: "172.28.128.11"
     mysql1.vm.synced_folder "/Users/chris/src/", "/src/"
