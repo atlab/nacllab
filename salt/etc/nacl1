@@ -1,2 +1,6 @@
-master: 172.28.128.61
 id: nacl1
+master: 
+  - 172.28.128.61
+  - 172.28.128.62
+log_file: /var/log/salt/minion
+log_level: info

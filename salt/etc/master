@@ -1,1 +1,3 @@
-# default setup
+# default setup 
+log_file: /var/log/salt/master
+log_level: info

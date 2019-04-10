@@ -15,7 +15,7 @@ Vagrant.configure("2") do |config|
   config.vm.define "nacl1" do |nacl1|
     # nacl.vm.box = "generic/ubuntu1804" # does funky dns stuff nobueno
     nacl1.vm.box = "ubuntu/bionic64"
-    nacl1.vm.hostname = "nacl"
+    nacl1.vm.hostname = "nacl1"
     nacl1.vm.network "private_network", ip: "172.28.128.61"
 
     # # there:
@@ -51,7 +51,9 @@ Vagrant.configure("2") do |config|
 
     nacl1.vm.provision :salt do |salt|
 
-      salt.install_type = "stable"
+      # salt.install_type = "stable"
+      salt.install_type = "git"
+      salt.install_args = "2018.3"
 
       salt.verbose = true
       salt.colorize = true
@@ -60,8 +62,8 @@ Vagrant.configure("2") do |config|
       # salt.no_minion = true
 
       salt.master_config = "salt/etc/master"
-      salt.master_key = "salt/keys/nacl1.pem"
-      salt.master_pub = "salt/keys/nacl1.pub"
+      salt.master_key = "salt/keys/master.pem"
+      salt.master_pub = "salt/keys/master.pub"
       salt.seed_master = {
                             "nacl1" => "salt/keys/nacl1.pub",
                             "nacl2" => "salt/keys/nacl2.pub",
@@ -71,7 +73,7 @@ Vagrant.configure("2") do |config|
                             "mysql3" => "salt/keys/mysql3.pub",
                          }
 
-      salt.minion_id = "nacl"
+      salt.minion_id = "nacl1"
       salt.minion_config = "salt/etc/nacl1"
       salt.minion_key = "salt/keys/nacl1.pem"
       salt.minion_pub = "salt/keys/nacl1.pub"
@@ -82,7 +84,7 @@ Vagrant.configure("2") do |config|
   config.vm.define "nacl2" do |nacl2|
     # nacl.vm.box = "generic/ubuntu1804" # does funky dns stuff nobueno
     nacl2.vm.box = "ubuntu/bionic64"
-    nacl2.vm.hostname = "nacl"
+    nacl2.vm.hostname = "nacl2"
     nacl2.vm.network "private_network", ip: "172.28.128.62"
 
     # # there:
@@ -118,7 +120,9 @@ Vagrant.configure("2") do |config|
 
     nacl2.vm.provision :salt do |salt|
 
-      salt.install_type = "stable"
+      # salt.install_type = "stable"
+      salt.install_type = "git"
+      salt.install_args = "2018.3"
 
       salt.verbose = true
       salt.colorize = true
@@ -127,8 +131,8 @@ Vagrant.configure("2") do |config|
       # salt.no_minion = true
 
       salt.master_config = "salt/etc/master"
-      salt.master_key = "salt/keys/nacl2.pem"
-      salt.master_pub = "salt/keys/nacl2.pub"
+      salt.master_key = "salt/keys/master.pem"
+      salt.master_pub = "salt/keys/master.pub"
       salt.seed_master = {
                             "nacl1" => "salt/keys/nacl1.pub",
                             "nacl2" => "salt/keys/nacl2.pub",
