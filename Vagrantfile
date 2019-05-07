@@ -241,10 +241,10 @@ Vagrant.configure("2") do |config|
       # also note: must zap minion key on master if reprovisioning
       # salt-key --delete=mon
 
-      salt.minion_id = "mysql3"
-      salt.minion_config = "salt/etc/mysql3"
-      salt.minion_key = "salt/keys/mysql3.pem"
-      salt.minion_pub = "salt/keys/mysql3.pub"
+      salt.minion_id = "mysql2"
+      salt.minion_config = "salt/etc/mysql2"
+      salt.minion_key = "salt/keys/mysql2.pem"
+      salt.minion_pub = "salt/keys/mysql2.pub"
     end
 
 
@@ -331,5 +331,4 @@ Vagrant.configure("2") do |config|
       salt.minion_pub = "salt/keys/mysql3.pub"
     end
   end
-
 end
