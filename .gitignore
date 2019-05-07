@@ -11,3 +11,4 @@ misc/
 salt/keys/*.pem
 salt/keys/*.pub
 
+*.vmdk
