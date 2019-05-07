@@ -7,3 +7,4 @@ common packages:
       - nvi
       - apt-file
       - make
+      - lvm2
