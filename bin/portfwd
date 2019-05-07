@@ -1,0 +1,11 @@
+#! /bin/sh
+
+case $1 in
+	"www-example")
+		portarg="";
+		portarg="${portarg} -L80:localhost:80";
+		;;
+	*)
+		portarg="";;
+esac
+exec vagrant ssh $1 -- $portarg
