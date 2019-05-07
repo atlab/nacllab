@@ -1,0 +1,49 @@
+
+* NACLLab: vagrant salt testnet/testlab 
+** Initial bootstrapping
+
+  - [X] salt master setup
+  - [X] salt minion setup
+  - [ ] salt bootstrap monitor box
+    - [ ] master: salt-key --accept=mon
+    - [ ] master: salt mon test.ping
+    - [ ] master: salt mon state.apply top
+
+** Make NACL Lab
+
+  - [ ] parameterize naclmaster
+  - [ ] parameterize client boxen
+  - [ ] ip mgmt in config
+  - [ ] merge other vagrants here
+  - [ ] create oneshot salt cfg for single box salt testing
+  
+** moveout:
+
+  - vagrant / ruby integration:
+     require config.rb
+     # $global_var
+     config.vm.define "#$global_var" do |...|
+     end
+
+   - vagrant plugin install vagrant-disksize
+
+     # https://github.com/sprotheroe/vagrant-disksize TODO TEST
+     # vbox; 1st disk only.
+      Vagrant.configure('2') do |config|
+        config.vm.box = 'ubuntu/xenial64'
+        config.disksize.size = '50GB'
+      end
+
+     # more disks: TODO TEST
+     config.vm.customize ['createhd', '--filename', file_to_disk, '--size', 500 * 1024]
+     config.vm.customize ['storageattach', :id, '--storagectl', 'SATA Controller', '--port', 1, '--device', 0, '--type', 'hdd', '--medium', file_to_disk]
+end
+
+/Users/chris/src/atl/nacllab/vagrant-disksize/README.md
+
+
+-- vagrant persistent storage
+
+      # Aux Data Disk
+      # better: try this: https://github.com/kusnier/vagrant-persistent-storage
+      /Users/chris/src/atl/nacllab/vagrant-persistent-storage/README.md
