@@ -270,6 +270,9 @@ Vagrant.configure("2") do |config|
       # vb.customize ["modifyvm", :id, "--vram", "64"]
       # vb.customize ["modifyvm", :id, "--vram", "64"]
 
+      # enlarge root vol (untested)
+      # https://github.com/sprotheroe/vagrant-disksize
+
       # Aux Data Disk
       # better: try this: https://github.com/kusnier/vagrant-persistent-storage
       # todo: gen uuid into file used later by salt stuffs
