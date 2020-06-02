@@ -13,7 +13,6 @@
 Vagrant.configure("2") do |config|
 
   config.vm.define "nacl1" do |nacl1|
-    # nacl.vm.box = "generic/ubuntu1804" # does funky dns stuff nobueno
     nacl1.vm.box = "ubuntu/bionic64"
     nacl1.vm.hostname = "nacl1"
     nacl1.vm.network "private_network", ip: "172.28.128.61"
@@ -82,7 +81,6 @@ Vagrant.configure("2") do |config|
   end
 
   config.vm.define "nacl2" do |nacl2|
-    # nacl.vm.box = "generic/ubuntu1804" # does funky dns stuff nobueno
     nacl2.vm.box = "ubuntu/bionic64"
     nacl2.vm.hostname = "nacl2"
     nacl2.vm.network "private_network", ip: "172.28.128.62"
@@ -151,7 +149,7 @@ Vagrant.configure("2") do |config|
   end
 
   config.vm.define "mon" do |mon|
-    mon.vm.box = "ubuntu/xenial64"
+    mon.vm.box = "ubuntu/bionic64"
     mon.vm.hostname = "mon"
     mon.vm.network "private_network", ip: "172.28.128.63"
 
@@ -217,7 +215,7 @@ Vagrant.configure("2") do |config|
   end
 
   config.vm.define "mysql2" do |mysql2|
-    mysql2.vm.box = "ubuntu/xenial64"
+    mysql2.vm.box = "ubuntu/bionic64"
     mysql2.vm.hostname = "mysql2"
     mysql2.vm.network "private_network", ip: "172.28.128.12"
     mysql2.vm.synced_folder "/Users/chris/src/", "/src/"
@@ -273,8 +271,6 @@ Vagrant.configure("2") do |config|
       # enlarge root vol (untested)
       # https://github.com/sprotheroe/vagrant-disksize
 
-      # Aux Data Disk
-      # better: try this: https://github.com/kusnier/vagrant-persistent-storage
       # todo: gen uuid into file used later by salt stuffs
       # todo: persistent / reattaching across destroysish
       #   andor host side iscsi targets
@@ -296,18 +292,27 @@ Vagrant.configure("2") do |config|
       #               '--type', 'hdd', '--medium', disk_file]
 
     end
+      
+    # Aux Data Disk (disabled)
+    # can be used to persist mysql data across VM's
+    # (useful for system upgrade testing, etc)
+    #
+    # 1st, install: https://github.com/kusnier/vagrant-persistent-storage
+    #
+    # Then, as needed, enable stanzas in the vms as follows:
+    #
 
-    disk_file="#{mysql3.vm.hostname}-auxdisk.vmdk"  # todo: rename .vdi on build
-    config.persistent_storage.enabled = true
-    config.persistent_storage.location = disk_file
-    config.persistent_storage.size = 5000
-    config.persistent_storage.mountname = 'mysql'
-    config.persistent_storage.filesystem = 'ext4'
-    config.persistent_storage.mountpoint = '/data/mysql'
-    config.persistent_storage.volgroupname = 'vgdb'
-    config.persistent_storage.diskdevice = '/dev/sdc'
-    # config.persistent_storage.use_lvm = false  # if nolvm (todo nolvm opts)
-    # config.persistent_storage.partition = false  # if nopart
+    #disk_file="#{mysql3.vm.hostname}-auxdisk.vdi"
+    #mysql3.persistent_storage.enabled = true
+    #mysql3.persistent_storage.location = disk_file
+    #mysql3.persistent_storage.size = 5000
+    #mysql3.persistent_storage.mountname = 'mysql'
+    #mysql3.persistent_storage.filesystem = 'ext4'
+    #mysql3.persistent_storage.mountpoint = '/data/mysql'
+    #mysql3.persistent_storage.volgroupname = 'vgdb'
+    #mysql3.persistent_storage.diskdevice = '/dev/sdc'
+    # # mysql3.persistent_storage.use_lvm = false  # if nolvm (todo nolvm opts)
+    # # mysql3.persistent_storage.partition = false  # if nopart
 
     mysql3.vm.provision :salt do |salt|
 
