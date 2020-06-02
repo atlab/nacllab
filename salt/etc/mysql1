@@ -1,3 +1,5 @@
+# mysql1 minion config
+
 id: mysql1
 master: 
   - 172.28.128.61
@@ -6,9 +8,6 @@ master:
 log_file: /var/log/salt/minion
 log_level: info
 
-# testing
-# todo: ok?
-# todo: push minion config
 mysql.host: 'localhost'
 mysql.port: 3306
 mysql.user: 'root'
