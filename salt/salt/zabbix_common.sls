@@ -1,22 +1,12 @@
 
-# todo: zabbix server is sloo
-
-
-add_zabbix_gpg_key:
+fetch_zabbix_repo:
   cmd.run:
-    - name: 'gpg --keyserver  hkp://keys.gnupg.net --recv-keys 082AB56BA14FE591'
-    - unless: test -e /etc/apt/sources.list.d/zabbix.list
+    - name: wget -O /root/zabbix-release_4.0-2+bionic_all.deb https://repo.zabbix.com/zabbix/4.0/ubuntu/pool/main/z/zabbix-release/zabbix-release_4.0-2+bionic_all.deb
+    - unless: test -e /root/zabbix-release_4.0-2+bionic_all.deb
 
-add_zabbix_apt_key:
+
+install_zabbix_repo:
   cmd.run:
-    - name: 'gpg -a --export 082AB56BA14FE591 | apt-key add -'
+    - name: dpkg -i /root/zabbix-release_4.0-2+bionic_all.deb
     - unless: test -e /etc/apt/sources.list.d/zabbix.list
-  require:
-    - cmd: 'add_zabbix_gpg_key'
-
-add_zabbix_repo:
-  pkgrepo.managed:
-    - humanname: zabbix
-    - name: deb http://repo.zabbix.com/zabbix/3.4/ubuntu {{ grains['lsb_distrib_codename'] }} main
-    - file: /etc/apt/sources.list.d/zabbix.list
 
