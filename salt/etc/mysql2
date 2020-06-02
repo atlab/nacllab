@@ -1,0 +1,17 @@
+# mysql2 minion config
+
+id: mysql2
+master: 
+  - 172.28.128.61
+  - 172.28.128.62
+
+log_file: /var/log/salt/minion
+log_level: info
+
+mysql.host: 'localhost'
+mysql.port: 3306
+mysql.user: 'root'
+mysql.pass: ''
+mysql.db: 'mysql'
+mysql.unix_socket: '/var/run/mysqld/mysqld.sock'
+mysql.charset: 'utf8'
