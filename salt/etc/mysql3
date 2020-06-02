@@ -4,13 +4,10 @@ id: mysql3
 master: 
   - 172.28.128.61
   - 172.28.128.62
+
 log_file: /var/log/salt/minion
 log_level: info
 
-# testing
-# todo: ok?
-# todo: push minion config + grains in bootstrap
-#   then use in template
 mysql.host: 'localhost'
 mysql.port: 3306
 mysql.user: 'root'
